@@ -111,7 +111,7 @@ Writing clean code in a React or React Native project goes beyond formatting. It
 
 ---
 
-## 3. Incomplete Feature: Watchlist
+## 3. Incomplete Features: Watchlist, and unit tests
 
 Below is a concise explanation of how I would have implemented the Watchlist feature, along with brief pseudocode. I didn’t have enough time to fully build it, but this shows the exact approach I would have taken.
 ## 1. Dependencies
@@ -159,3 +159,8 @@ yarn add @react-native-async-storage/async-storage
 
         Add WatchlistScreen to the bottom‐tab navigator under the “Watchlist” tab.
 
+# Jest and the React Native library for unit test
+- I would write **unit tests** using **Jest** and **React Native Testing Library** to cover:
+  - Component rendering and button interactions.
+  - Custom hooks that fetch data via React Query.
+- By mocking AsyncStorage and service calls, I ensure tests run quickly and deterministically.
