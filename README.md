@@ -40,7 +40,6 @@ Writing clean code in a React or React Native project goes beyond formatting. It
   - Rather than a top‐level `/components` directory, I group folders by feature. For example:
     ```text
     src/
-      features/
         movies/
           components/
             MovieCard.tsx
