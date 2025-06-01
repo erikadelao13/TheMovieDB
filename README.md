@@ -110,60 +110,53 @@ Writing clean code in a React or React Native project goes beyond formatting. It
 - **React Query (TanStack Query)**  
   - For remote data fetching (movies, details, search results), React Query handles caching, background revalidation, loading states, and errors. This drastically reduces boilerplate and centralizes data logic.
 
-### 2.6 Clean Code Checklist for React Native
-
-1. **Folder Structure**  
-   - `src/` root  
-     - `features/` (by‐feature grouping)  
-     - `shared/` (UI components, utilities, constants)  
-     - `App.tsx` or `index.tsx`
-
-2. **Components**  
-   - **Small**: Each component < 200 lines, ideally < 100.  
-   - **Single Responsibility**: One visual or logical purpose per component.  
-   - **Stateless vs. Stateful**: Prefer passing props over internal state. Only use local state when necessary.
-
-3. **Hooks & Stores**  
-   - Custom hooks start with `use`: `useFetchMovies`, `useMovieDetails`, `useWatchlistStore`.  
-   - Hooks abstract business logic—components simply call them and render.  
-   - Zustand store files contain only state and actions—no UI code.
-
-4. **Styling**  
-   - I use `StyleSheet.create` for styles.  
-   - I keep style objects separate from JSX—e.g. `const styles = StyleSheet.create({...})`.
-
-5. **Types & Interfaces**  
-   - I define clear TypeScript interfaces for API responses (e.g. `Movie`, `MovieDetail`, `MovieVideo`).  
-   - I use them consistently in Axios calls, React Query, and component props.
-
-6. **Error Handling**  
-   - I handle loading, error, and empty states in components that fetch data.  
-   - I show user‐friendly messages or retry buttons if a request fails.
-
-7. **Accessibility**  
-   - I add `accessibilityLabel`, `accessible`, and `importantForAccessibility` on key components (buttons, images, input fields).
-
-8. **Performance**  
-   - I memoize large component trees with `React.memo`.  
-   - I use `FlatList`/`SectionList` for long lists, with `keyExtractor`, `getItemLayout`, and `initialNumToRender`.
-
-9. **Testing**  
-   - I write unit tests for pure utility functions (date formatting, data mapping).  
-   - I use React Native Testing Library to render components and assert on text, accessibility roles, and callbacks.
-
 ---
 
 ## 3. Incomplete Feature: Watchlist
 
-### 3.1 Description of the Requirement
+Below is a concise explanation of how I would have implemented the Watchlist feature, along with brief pseudocode. I didn’t have enough time to fully build it, but this shows the exact approach I would have taken.
+## 1. Dependencies
 
-- **Goal**: Allow users to “add” or “remove” movies to a personal watchlist.  
-- **Persistence**: Items in the watchlist must persist locally on the device so that when the user closes and re-opens the app, their watchlist remains intact.  
-- **UI**: There should be a dedicated “Watchlist” screen under the bottom/tab navigator where users see all movies they’ve saved. Each entry shows poster, title, and a “Remove” button.
+# Zustand for state management, AsyncStorage for persistence
+yarn add zustand
+yarn add @react-native-async-storage/async-storage
 
-### 3.2 Proposed Implementation with Zustand + Persist Middleware
+      store/
+        useWatchlistStore.ts   ← Zustand store with persist
+      components/
+        WatchlistScreen.tsx    ← Screen to render saved watchlist
 
-1. **Install Dependencies**  
-   ```bash
-   yarn add zustand
-   yarn add @react-native-async-storage/async-storage
+##2. Steps I Would Follow
+
+    Create a Zustand store
+
+        Use persist middleware to save the watchlist array in AsyncStorage.
+
+        Expose methods:
+
+            addToWatchlist(movie: Movie)
+
+            removeFromWatchlist(id: number)
+
+            isInWatchlist(id: number): boolean
+
+    Add “Add/Remove” button in Movie Detail
+
+        Import useWatchlistStore.
+
+        Check if the movie’s id is already in watchlist.
+
+        On button press, call addToWatchlist(movie) or removeFromWatchlist(id).
+
+    Build the Watchlist screen
+
+        Import useWatchlistStore() to get the saved array.
+
+        If empty, show “Your watchlist is empty.”
+
+        Otherwise, render a FlatList of saved movies, each with its poster, title, and a “Remove” button that calls removeFromWatchlist(id).
+
+    Hook it up to navigation
+
+        Add WatchlistScreen to the bottom‐tab navigator under the “Watchlist” tab.
+
