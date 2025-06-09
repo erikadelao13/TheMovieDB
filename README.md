@@ -37,34 +37,6 @@ Writing clean code in a React or React Native project goes beyond formatting. It
 ### 2.2 Modularity & Reusability
 
 - **Split by Feature (Domain) Instead of Type**  
-  - Rather than a top‐level `/components` directory, I group folders by feature. For example:
-    ```text
-    src/
-        movies/
-          components/
-            MovieCard.tsx
-            MovieList.tsx
-          hooks/
-            useFetchMovies.ts
-          screens/
-            MovieListScreen.tsx
-            MovieDetailScreen.tsx
-          types.ts
-          api.ts
-        watchlist/
-          components/
-            WatchlistScreen.tsx
-          store/
-            useWatchlistStore.ts
-          types.ts
-      shared/
-        ui/
-          Button.tsx
-          TextInput.tsx
-        utils/
-          apiClient.ts
-          dateUtils.ts
-    ```
   - This “feature architecture” ensures that all files needed for “movies” live together. I can navigate quickly, and new developers see everything related to a feature in one place.
 
 - **Component Splitting**  
